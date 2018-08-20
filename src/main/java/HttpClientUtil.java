@@ -1,5 +1,6 @@
 import info.monitorenter.cpdetector.io.*;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.util.Asserts;
 import sun.net.www.protocol.https.Handler;
 
 import javax.net.ssl.*;
@@ -23,6 +24,7 @@ public class HttpClientUtil {
     private static final String POST = "post";
     private static final String HTTPS = "https";
     private static final String UA = "User-Agent";
+    private static final String LOCATION = "Location";
 
     /*重试次数*/
     private static final int DEFAULT_RETRY_TIMES = 3;
@@ -57,6 +59,9 @@ public class HttpClientUtil {
     }};
 
     public static String get(String url, Map<String, String> headMap) throws Exception {
+        if (url == null || url.isEmpty()) {
+            throw new IllegalArgumentException("url is null");
+        }
         AtomicBoolean httpsSign = new AtomicBoolean(false);
         if (url.contains(HTTPS)) {
             httpsSign.set(true);
@@ -82,6 +87,9 @@ public class HttpClientUtil {
     }
 
     public static String post(String url, String body, Map<String, String> headMap) throws Exception {
+        if (url == null || url.isEmpty()) {
+            throw new IllegalArgumentException("url is null");
+        }
         AtomicBoolean httpsSign = new AtomicBoolean(false);
         if (url.contains(HTTPS)) {
             httpsSign.set(true);
@@ -150,6 +158,20 @@ public class HttpClientUtil {
         }
     }
 
+    public static String get302Url(String url, Map<String, String> headMap) throws Exception {
+        if (url == null || url.isEmpty()) {
+            throw new IllegalArgumentException("url is null");
+        }
+        URLConnection connection = buildURLConnection(url, GET, headMap);
+        connection.connect();
+        Map<String, List<String>> headerFields = connection.getHeaderFields();
+        List<String> locations = headerFields.get(LOCATION);
+        if (locations != null && locations.size() > 0) {
+            return locations.get(0);
+        }
+        return url;
+    }
+
 
     /**
      * 构建connection
@@ -184,20 +206,19 @@ public class HttpClientUtil {
         return connection;
     }
 
-    public static Map<String,String> getPCUserAgentHeadMap(){
+    public static Map<String, String> getPCUserAgentHeadMap() {
         Map<String, String> map = new HashMap<String, String>();
         Collections.shuffle(PC_UA_LIST);
-        map.put(UA,PC_UA_LIST.get(0));
+        map.put(UA, PC_UA_LIST.get(0));
         return map;
     }
 
-    public static Map<String,String> getPhoneUAHeadMap(){
+    public static Map<String, String> getPhoneUAHeadMap() {
         Map<String, String> map = new HashMap<String, String>();
         Collections.shuffle(PHONE_UA_LIST);
-        map.put(UA,PHONE_UA_LIST.get(0));
+        map.put(UA, PHONE_UA_LIST.get(0));
         return map;
     }
-
 
 
     //----------------------------------------------------------------------------------------
