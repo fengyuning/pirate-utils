@@ -165,9 +165,11 @@ public class HttpClientUtil {
         URLConnection connection = buildURLConnection(url, GET, headMap);
         connection.connect();
         Map<String, List<String>> headerFields = connection.getHeaderFields();
-        List<String> locations = headerFields.get(LOCATION);
-        if (locations != null && locations.size() > 0) {
-            return locations.get(0);
+        if (headerFields != null) {
+            List<String> locations = headerFields.get(LOCATION);
+            if (locations != null && locations.size() > 0) {
+                return locations.get(0);
+            }
         }
         return url;
     }
