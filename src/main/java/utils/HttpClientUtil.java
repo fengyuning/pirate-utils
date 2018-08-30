@@ -1,3 +1,5 @@
+package utils;
+
 import info.monitorenter.cpdetector.io.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.util.Asserts;

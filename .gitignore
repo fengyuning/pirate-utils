@@ -4,3 +4,8 @@
 *.class
 .idea/
 *.iml
+pom.xml
+log/error-2018-08-22.log
+log/running-2018-08-22.log
+src/main/resources/logbackBak.xml
+target/classes/logbackBak.xml
