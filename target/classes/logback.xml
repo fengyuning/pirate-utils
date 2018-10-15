@@ -1,27 +1,53 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
 <!--<configuration scan="false" scanPeriod="60 seconds" debug="false">-->
-<configuration>
-    <property name="HOME_PATH" value="/javaProject/pirate-utils/log" scope="CONTEXT"/>
-    <property name="DEFAULT_PATTERN" value="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %level %logger - %msg%n" scope="CONTEXT"/>
-    <property name="MAX_HISTORY" value="14" scope="CONTEXT"/>
+<!--&lt;!&ndash;<configuration>&ndash;&gt;-->
+    <!--<property name="HOME_PATH" value="/javaProject/pirate-utils/log" scope="CONTEXT"/>-->
+    <!--<property name="DEFAULT_PATTERN" value="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %level %logger - %msg%n" scope="CONTEXT"/>-->
+    <!--<property name="MAX_HISTORY" value="14" scope="CONTEXT"/>-->
+    <!--<property name="LOGGER_LEVEL" value="info"/>-->
 
-    <springProfile name="dev">
-        <!-- 测试环境日志级别 -->
-        <property name="loggerLevel" value="ERROR"/>
-        <appender name="logstach" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-            <destination>120.78.142.22:5044</destination>
-            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-                <customFields>{"env":"dev"}</customFields>
-            </encoder>
-            <keepAliveDuration>15 minutes</keepAliveDuration>
-        </appender>
-    </springProfile>
+    <!--&lt;!&ndash; 往控制台打印 &ndash;&gt;-->
+    <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--<encoder>-->
+            <!--<Pattern>${DEFAULT_PATTERN}</Pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
 
-    <logger name="test" level="${loggerLevel}" additivity="false">
-        <appender-ref ref="logstach" />
-    </logger>
+    <!--<appender name="running" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--<FileNamePattern>${HOME_PATH}/running-%d{yyyy-MM-dd}.log</FileNamePattern>-->
+            <!--<MaxHistory>${MAX_HISTORY}</MaxHistory>-->
+        <!--</rollingPolicy>-->
+        <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+            <!--<pattern>${DEFAULT_PATTERN}</pattern>-->
+        <!--</layout>-->
+    <!--</appender>-->
 
-    <root level="${loggerLevel}">
-        <appender-ref ref="logstach" />
-    </root>
-</configuration>
+    <!--<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>ERROR</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--<FileNamePattern>${HOME_PATH}/error-%d{yyyy-MM-dd}.log</FileNamePattern>-->
+            <!--<MaxHistory>${MAX_HISTORY}</MaxHistory>-->
+        <!--</rollingPolicy>-->
+        <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+            <!--<pattern>${DEFAULT_PATTERN}</pattern>-->
+        <!--</layout>-->
+    <!--</appender>-->
+
+    <!--<logger name="a111" level="${LOGGER_LEVEL}" additivity="false">-->
+        <!--<appender-ref ref="error" />-->
+    <!--</logger>-->
+    <!--<logger name="a222" level="${LOGGER_LEVEL}" additivity="false">-->
+        <!--<appender-ref ref="error" />-->
+    <!--</logger>-->
+
+    <!--<root level="info">-->
+        <!--<appender-ref ref="STDOUT"/>-->
+        <!--<appender-ref ref="running"/>-->
+        <!--<appender-ref ref="error"/>-->
+    <!--</root>-->
+<!--</configuration>-->
