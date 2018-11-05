@@ -9,7 +9,8 @@ import org.apache.poi.ss.util.RegionUtil;
 import java.io.*;
 
 /**
- * 写Excel表格文件的demo
+ * 写Excel表格文件的demo poi
+ * 貌似有个更好的工具叫easyExcel
  */
 public class ExcelDemo {
 
