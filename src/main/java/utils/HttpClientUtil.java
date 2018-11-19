@@ -2,7 +2,6 @@ package utils;
 
 import info.monitorenter.cpdetector.io.*;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.util.Asserts;
 import sun.net.www.protocol.https.Handler;
 
 import javax.net.ssl.*;
