@@ -45,6 +45,19 @@ public class ThreadPoolUtil {
     }
 
     public static void main(String[] args) {
+        try {
+            FIXED_THREAD_POOL.execute(() -> {
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                    System.out.println(2222);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }catch (Exception e){
 
+        }
+
+        System.out.println(1111);
     }
 }
