@@ -3,6 +3,7 @@ package utils;
 
 import Enums.DateTimeEnum;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,5 +57,30 @@ public class DateTimeUtil {
             dateList.add(start.plusDays(i));
         }
         return dateList;
+    }
+
+    /**
+     * 用时间戳获取相差的时间间隔
+     */
+    public static int getDays(String startDate, String endDate) {
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("startDate or endDate is null");
+        }
+        if (!CheckUtil.isDate(startDate)) {
+            throw new IllegalArgumentException("startDate格式错误(应为yyyy-MM-dd)");
+        }
+        if (!CheckUtil.isDate(endDate)) {
+            throw new IllegalArgumentException("endDate格式错误(应为yyyy-MM-dd)");
+        }
+        DateTime startTime = DateTime.parse(startDate, DateTimeEnum.DATE.getFormat());
+        DateTime endTime = DateTime.parse(endDate, DateTimeEnum.DATE.getFormat());
+
+        Long days = (endTime.getMillis() - startTime.getMillis()) / 86400000;
+        return days.intValue() + 1;
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(getDays("2017-11-01","2018-11-01"));
     }
 }
