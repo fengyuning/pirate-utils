@@ -1,9 +1,6 @@
 package utils;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.concurrent.*;
 
 /**
@@ -44,20 +41,4 @@ public class ThreadPoolUtil {
         FIXED_THREAD_POOL.execute(runnable);
     }
 
-    public static void main(String[] args) {
-        try {
-            FIXED_THREAD_POOL.execute(() -> {
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                    System.out.println(2222);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            });
-        }catch (Exception e){
-
-        }
-
-        System.out.println(1111);
-    }
 }
